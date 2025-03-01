@@ -1,4 +1,9 @@
-const ContactTable = () => {
+import { getContacts } from '../../lib/data';
+import { formatDate } from '../../lib/utils';
+import {EditButton, DeleteButton} from "./button"
+
+const ContactTable = async () => {
+  const contacts = await getContacts();
   return (
     <table className="w-full text-sm text-left text-gray-500">
       <thead className="w-full text-gray-700 uppercase bg-gray-50">
@@ -11,13 +16,18 @@ const ContactTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td className='py-3 px-6'></td>
-          <td className='py-3 px-6'></td>
-          <td className='py-3 px-6'></td>
-          <td className='py-3 px-6'></td>
-          <td className='py-3 px-6'></td>
-        </tr>
+        {contacts.map((contact, index) => (
+          <tr key={contact.id} className='bg-white border-b'>
+            <td className="py-3 px-6">{index + 1}</td>
+            <td className="py-3 px-6">{contact.name}</td>
+            <td className="py-3 px-6">{contact.phone}</td>
+            <td className="py-3 px-6">{formatDate(contact.updatedAt.toString())}</td>
+            <td className="flex justify-center gap-1 py-3">
+              <EditButton/>
+              <DeleteButton/>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
