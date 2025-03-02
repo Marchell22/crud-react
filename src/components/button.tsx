@@ -1,8 +1,10 @@
-"use client"
+'use client';
+
 import Link from 'next/link';
 import { IoAddSharp, IoPencil, IoTrashOutline } from 'react-icons/io5';
 import { useFormStatus } from 'react-dom';
 import clsx from 'clsx';
+import { deleteContact } from '../../lib/action';
 
 export const CreateButton = () => {
   return (
@@ -16,10 +18,10 @@ export const CreateButton = () => {
   );
 };
 
-export const EditButton = () => {
+export const EditButton = ({ id }: { id: string }) => {
   return (
     <Link
-      href="/contact/cretae"
+      href={`/contact/edit/${id}`}
       className="rounded-sm border p-1 hover:bg-gray-100"
     >
       <IoPencil size={20} />
@@ -27,24 +29,33 @@ export const EditButton = () => {
   );
 };
 
-export const DeleteButton = () => {
+export const DeleteButton = ({ id }: { id: string }) => {
+  const deleteWithId = async () => {
+    await deleteContact(id);
+  };
+
   return (
-    <button className="rounded-sm border p-1 hover:bg-gray-100">
-      <IoTrashOutline size={20} />
-    </button>
+    <form action={deleteWithId}>
+      <button className="rounded-sm border p-1 hover:bg-gray-100">
+        <IoTrashOutline size={20} />
+      </button>
+    </form>
   );
 };
 
-export const SubmitButton = ({label}:{label:string}) => {
-  const { pending } = useFormStatus()
-  const className = clsx("text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-sm text-sm w-full px-5 py-3 text-center", {"opacity-50 cursor-progress" : pending} )
+export const SubmitButton = ({ label }: { label: string }) => {
+  const { pending } = useFormStatus();
+  const className = clsx(
+    'text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-sm text-sm w-full px-5 py-3 text-center',
+    { 'opacity-50 cursor-progress': pending }
+  );
   return (
-    <button
-      type="submit"
-      disabled={pending}
-      className={className}
-    >
-      {label === "save" ? (<span>{pending ? "Saving..." : "Save"}</span>):(<span>{pending ? "Update...": "Update"}</span>)}
+    <button type="submit" disabled={pending} className={className}>
+      {label === 'save' ? (
+        <span>{pending ? 'Saving...' : 'Save'}</span>
+      ) : (
+        <span>{pending ? 'Update...' : 'Update'}</span>
+      )}
     </button>
   );
 };
