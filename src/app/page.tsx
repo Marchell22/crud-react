@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { HomeContact } from "@/components/button";
 
 export default function Home() {
   return (
-    <h1 className="title text-2xl">Home Page</h1>
+    <HomeContact/>
   );
 }

@@ -17,7 +17,16 @@ export const CreateButton = () => {
     </Link>
   );
 };
-
+export const HomeContact = () =>{
+  return (
+    <Link
+      href='/contact'
+      className="rounded-sm border p-1 hover:bg-gray-100"
+    >
+      Contact Page
+    </Link>
+  );
+}
 export const EditButton = ({ id }: { id: string }) => {
   return (
     <Link
