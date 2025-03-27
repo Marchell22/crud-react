@@ -1,0 +1,5 @@
+Jalankan Prisma
+npx prisma studio
+
+Migrate Prisma
+npx prisma migrate dev
